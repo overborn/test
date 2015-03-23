@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My counter</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+</head>
+<body>
+<div class="hiddenValue">0</div>
+<div class="counterDiv1">
+    <div class="counterDiv2">0</div>
+    <div class="counterDiv2">0</div>
+    <div class="counterDiv2">0</div>
+    <div class="counterDiv2">0</div>
+</div>
+<script type="text/javascript">
+// $(function(){
+    function extendCounter(value){
+        if (value == undefined) value = '';
+        var div = $('.counterDiv1'); 
+        div.width(div.width() + 34);
+        div.prepend("<div class='counterDiv2'>"+ value +"</div>")
+    };    
+    function initCounter(value){
+        value = zeroFill(value);
+        var count = $('.counterDiv1 > div').length;
+        if (value.length > count) {
+            for (var i=0;i<value.length-count;i++){
+                extendCounter();
+            }            
+        }
+        $('.hiddenValue').text(value);
+        $('.counterDiv2').each(function(index){
+            $(this).text(value[index]);
+        });             
+    }
+    function getValue(){        
+        return $('.hiddenValue').text()
+    }
+
+    function incValue(inc){
+        var value = parseInt(getValue());
+        if (inc == undefined) inc = 1
+        if (value >= 9999-inc) {
+            if ((value+inc).toString().length > value.toString().length) extendCounter()
+        }        
+        setValue(value+inc);
+    }
+    function setValue(value){        
+        value = zeroFill(value);
+        $('.counterDiv2').each(function(index){
+            $(this).text(value[index]);
+        });
+        $('.hiddenValue').text(value);         
+    }
+    function zeroFill(value){
+        if (value < 1000){
+            var strValue = ("0000" + value).slice(-4); // fills with zeros
+        } else {
+            var strValue = value.toString();
+        }
+        return strValue
+    }
+
+    // function run(){
+    //     for (var i=0; i<100001000;i=i+101) setTimeout(initCounter, 50, i)
+    // }
+    $('.counterDiv1').click(function(){
+        initCounter(9000);
+        setInterval(incValue, 10, 10101);
+    });
+// });    
+</script>
+<style>
+   .counterDiv1 {
+    position: fixed; 
+    background: #f0f0f0; /* Цвет фона */
+    height: 30px;
+    width: 152px;
+    right: 15px;
+    border: 2px solid;
+    padding: 8px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+   }
+   .counterDiv2 {
+    height: 20px;
+    width: 20px;
+    background: white;
+    border: 2px solid;
+    padding: 2px;
+    display: inline-block;
+    margin: 3px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align:center;
+   }
+   .hiddenValue {
+    display: none;
+   }
+  </style>
+
+</body>
+</html>
