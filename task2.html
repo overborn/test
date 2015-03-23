@@ -14,7 +14,8 @@
     <div class="counterDiv2">0</div>
 </div>
 <script type="text/javascript">
-var clickedCounter = false;
+$(function(){
+    var refresh = false;
     function extendCounter(value){
         if (value == undefined) value = '';
         var div = $('.counterDiv1'); 
@@ -63,13 +64,15 @@ var clickedCounter = false;
     }
 
     $('.counterDiv1').click(function(){
-        if (!clickedCounter) {
-            initCounter(9000);
-            setInterval(incValue, 10, 10101);
-            clickedCounter = true;
-        }        
+        if (!refresh) {
+            initCounter(getValue());
+            refresh = setInterval(incValue, 10, 10101);
+        } else {
+            clearInterval(refresh);
+            refresh = false;
+        }       
     });
- 
+}); 
 </script>
 <style>
    .counterDiv1 {
