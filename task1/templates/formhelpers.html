@@ -1,0 +1,9 @@
+{% macro render_field(field) %}
+
+<div class="form-group">
+  {{ field.label(class="col-sm-4 control-label") }}
+  <div class="col-sm-5">
+    {{ field(class="form-control", required=true) }}
+  </div>
+</div>
+{% endmacro %}

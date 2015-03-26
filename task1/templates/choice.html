@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<p class="lead">
+Выбран производитель {{ context_dict.car }}, модель {{ context_dict.model }}, с пробегом {{ context_dict.run }} км. <br>
+<a href="{{ url_for('index') }}">Назад</a>
+</p>
+{% endblock %}
